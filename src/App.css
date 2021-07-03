@@ -67,3 +67,8 @@ input[type="file"] {
   font-weight: bold;
   border-radius: 5px;
 }
+.text{
+  margin-top: 2px;
+  text-transform: capitalize;
+  font-size: medium;
+}
