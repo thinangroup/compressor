@@ -3,13 +3,14 @@ import './App.css';
 import { Container, Grid, Image, Item, Button } from "semantic-ui-react";
 import { useState } from "react";
 import imageCompression from "browser-image-compression";
-import InputSlider from './slider';
+import TextField from '@material-ui/core/TextField';
 
 function App() {
   const [origImage, setOrigImage] = useState("");
   const [origImageFile, setorigImageFile] = useState("");
   const [compressImage, setcompressImage] = useState("");
   const [filename, setfilename] = useState("");
+  const [value,setValue] = useState("");
 
 
   const handle = (e) => {
@@ -23,7 +24,7 @@ function App() {
     e.preventDefault();
 
     const options = {
-      maxSizeMB: 1,
+      maxSizeMB: value,
       maxWidthOrHeight: 500,
       useWebWorker: true,
     };
@@ -39,14 +40,17 @@ function App() {
       setcompressImage(downloadLink);
     })
   }
-
+  function valueChanged(evt) {
+    setValue(evt.target.value);
+    console.log(value);
+  }
   return (
     <div className="App">
       <Container className="maincon" >
         <Grid>
           <h3>{""}</h3>
           <Grid.Row centered>
-            {origImageFile && <InputSlider />}
+            {origImageFile && <div style={{display: "flex"}}><TextField id="outlined-basic" onChange={valueChanged} type='number' size="small" label="Enter Size in KB" variant="outlined" /></div>}
           </Grid.Row>
           <Grid.Row>
             <Grid.Column width={6}>
@@ -88,7 +92,7 @@ function App() {
                 </Container>
 
                 <div className="compress">
-                  {compressImage && 
+                  {compressImage &&
                     <a className='custom-file-upload' href={compressImage} download={filename} >
                       {" "}
                       Download Image
